@@ -1,0 +1,13 @@
+name: Inquisitor
+main: com.frdfsnlght.inquisitor.Inquisitor
+version: "2.19"
+authors:
+  - frdfsnlght
+website: http://dev.bukkit.org/server-mods/inquisitor/
+description: >
+  Collects player statistics, stores them in a database, and
+  optionally serves them through a built-in web server.
+commands:
+  inq:
+    description: Main Inquisitor command. See /inq help for more.
+    usage: /<command> command [<option> ...]
