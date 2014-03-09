@@ -240,8 +240,8 @@ public final class StatisticsGroup {
                 if (rs != null) rs.close();
                 if (stmt != null) stmt.close();
             } catch (SQLException se) {}
-            return s;
         }
+        return s;
     }
 
     public Set<String> getStatisticsNames() {

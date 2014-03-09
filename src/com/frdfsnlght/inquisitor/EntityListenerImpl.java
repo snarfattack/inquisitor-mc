@@ -40,7 +40,10 @@ public final class EntityListenerImpl implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent event) {
         if (! (event.getEntity() instanceof Player)) return;
-        Statistics stats = PlayerStats.group.getStatistics(((Player)event.getEntity()).getName());
+        Player player = (Player)event.getEntity();
+		if (!PlayerStats.isStatsPlayer(player))
+			return;
+        Statistics stats = PlayerStats.group.getStatistics(player.getName());
         stats.add("travelDistances", "Falling", event.getEntity().getFallDistance());
     }
 
@@ -57,12 +60,16 @@ public final class EntityListenerImpl implements Listener {
 
         if (! (killerEnt instanceof Player)) return;
 
-        ItemStack inHand = ((Player)killerEnt).getItemInHand();
+        Player player = (Player)killerEnt;
+		if (!PlayerStats.isStatsPlayer(player))
+			return;
+		
+        ItemStack inHand = player.getItemInHand();
         Material weapon = null;
         if (inHand != null)
             weapon = inHand.getType();
 
-        String killerName = ((Player)killerEnt).getName();
+        String killerName = player.getName();
         Statistics stats = PlayerStats.group.getStatistics(killerName);
         String weaponName = ((weapon == null) || (weapon == Material.AIR)) ? "None" : Utils.titleCase(weapon.toString());
 
@@ -88,19 +95,27 @@ public final class EntityListenerImpl implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityShootBow(EntityShootBowEvent event) {
         if (! (event.getEntity() instanceof Player)) return;
-        PlayerStats.group.getStatistics(((Player)event.getEntity()).getName()).incr("arrowsShot");
+        Player player = (Player)event.getEntity();
+		if (!PlayerStats.isStatsPlayer(player))
+			return;
+        PlayerStats.group.getStatistics(player.getName()).incr("arrowsShot");
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityTame(EntityTameEvent event) {
         if (! (event.getOwner() instanceof Player)) return;
-        PlayerStats.group.getStatistics(((Player)event.getOwner()).getName()).incr("animalsTamed", Utils.normalizeEntityTypeName(event.getEntityType()));
+        Player player = (Player)event.getEntity();
+		if (!PlayerStats.isStatsPlayer(player))
+			return;
+        PlayerStats.group.getStatistics(player.getName()).incr("animalsTamed", Utils.normalizeEntityTypeName(event.getEntityType()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
         if (! (event.getEntity() instanceof Player)) return;
         Player player = (Player)event.getEntity();
+		if (!PlayerStats.isStatsPlayer(player))
+			return;
         if (event.getFoodLevel() <= player.getFoodLevel()) return;
         Material food = player.getItemInHand().getType();
         if (! food.isEdible()) return;

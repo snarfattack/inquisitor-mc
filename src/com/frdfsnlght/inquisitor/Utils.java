@@ -287,13 +287,13 @@ public class Utils {
 
     public static void checkVersion() {
         try {
-            String urlStr = Global.plugin.getDescription().getWebsite() + "pages/version";
+            String urlStr = "http://code.google.com/p/inquisitor-mc/wiki/VERSION";
             URL url = new URL(urlStr);
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
             http.setInstanceFollowRedirects(true);
             int statusCode = http.getResponseCode();
             if (statusCode != 200) {
-                debug("got status %s during plugin version check");
+                debug("got status %s during plugin version check", statusCode);
                 http.disconnect();
                 return;
             }

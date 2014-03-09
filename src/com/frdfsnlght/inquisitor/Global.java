@@ -56,7 +56,8 @@ public final class Global {
     }
 
     public static boolean isTesting() {
-        return System.getenv("INQUISITOR_TEST") != null;
+    	return true;
+        //return System.getenv("INQUISITOR_TEST") != null;
     }
 
 }

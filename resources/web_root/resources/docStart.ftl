@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<#setting number_format="0">
 <html class="no-js">
     <head>
         <title>Inquisitor</title>

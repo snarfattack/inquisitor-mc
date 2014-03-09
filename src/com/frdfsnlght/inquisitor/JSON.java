@@ -47,6 +47,7 @@ public final class JSON {
         if (o instanceof Map) return encodeObject((Map)o);
         if (o instanceof Collection) return encodeArray((Collection)o);
         if (o.getClass().isArray()) return encodeArray((Object[])o);
+        //return o.toString();
 
         throw new IllegalArgumentException("unsupported JSON encodable object " + o);
     }
