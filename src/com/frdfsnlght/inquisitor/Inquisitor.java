@@ -134,12 +134,12 @@ public class Inquisitor extends JavaPlugin {
 
 		ctx.sendLog("ready on server '%s'", getServer().getServerName());
 
-		int x = 0;
-		while (x < 100) {
-			Material m = Material.getMaterial(x);
-			ctx.sendLog(m.getId() + ":" + m.toString());
-			x++;
-		}
+//		int x = 0;
+//		while (x < 100) {
+//			Material m = Material.getMaterial(x);
+//			ctx.sendLog(m.getId() + ":" + m.toString());
+//			x++;
+//		}
 
 	}
 
