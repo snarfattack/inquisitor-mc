@@ -100,6 +100,7 @@ public final class JSON {
     }
 
     private static Object decodeValue(StringBuilder sb, int[] pos) {
+    	Utils.debug("decodeValue:\r\nsb = " + sb.toString() + "\r\n" + "pos.length = " + pos.length + "\r\n" + "pos[0] = " + pos[0]);
         stripWhitespace(sb, pos);
         requireChars(sb, pos);
         char ch = sb.charAt(0);
@@ -129,6 +130,7 @@ public final class JSON {
     }
 
     private static TypeMap decodeObject(StringBuilder sb, int[] pos) {
+    	Utils.debug("decodeObject:\r\nsb = " + sb.toString() + "\r\n" + "pos.length = " + pos.length + "\r\n" + "pos[0] = " + pos[0]);
         TypeMap map = new TypeMap();
         stripChars(sb, pos, 1);
         String key;
@@ -167,6 +169,7 @@ public final class JSON {
 
     @SuppressWarnings("unchecked")
     private static List decodeArray(StringBuilder sb, int[] pos) {
+    	Utils.debug("decodeArray:\r\nsb = " + sb.toString() + "\r\n" + "pos.length = " + pos.length + "\r\n" + "pos[0] = " + pos[0]);
         List list = new ArrayList();
         stripChars(sb, pos, 1);
         for (;;) {
@@ -187,6 +190,7 @@ public final class JSON {
     }
 
     private static String decodeString(StringBuilder sb, int[] pos, char quote) {
+    	Utils.debug("decodeString:\r\nsb = " + sb.toString() + "\r\n" + "pos.length = " + pos.length + "\r\n" + "pos[0] = " + pos[0]);
         StringBuilder str = new StringBuilder();
         if (quote != ':') stripChars(sb, pos, 1);
         for (;;) {
@@ -226,6 +230,7 @@ public final class JSON {
     private static Pattern numberPattern = Pattern.compile("^(\\-?[0-9]*\\.?[0-9]*[eE]?[\\+\\-]?[0-9]*)");
 
     private static Number decodeNumber(StringBuilder sb, int[] pos) {
+    	Utils.debug("decodeNumber:\r\nsb = " + sb.toString() + "\r\n" + "pos.length = " + pos.length + "\r\n" + "pos[0] = " + pos[0]);
         Matcher matcher = numberPattern.matcher(sb);
         if (matcher.find()) {
             String num = matcher.group(1);

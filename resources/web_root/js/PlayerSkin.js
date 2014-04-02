@@ -472,7 +472,7 @@ var PlayerSkin = (function() {
         },
         setSkin: function(playerName) {
             if (Modernizr.canvas)
-                skin.src = '/skin/' + playerName;
+                skin.src = '../skin/' + playerName;
             else
                 skin.src = simpleImageSrc;
         }

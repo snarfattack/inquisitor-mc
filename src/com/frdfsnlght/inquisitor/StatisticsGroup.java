@@ -16,6 +16,8 @@
 package com.frdfsnlght.inquisitor;
 
 import com.frdfsnlght.inquisitor.Statistic.Type;
+
+import java.sql.Clob;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -257,17 +259,25 @@ public final class StatisticsGroup {
     public TypeMap loadStatistics(ResultSet rs, Collection<String> statNames) throws SQLException {
         TypeMap values = new TypeMap();
         TypeMap mappedObjects = null;
-        for (String statName : statNames) {
+    	Utils.debug("Entering loadStatistics(ResultSet rs, Collection<String> statNames)");
+    	for (String statName : statNames) {
+        	Utils.debug("Loading statistic %s", statName);
             Statistic stat = getStatistic(statName);
             if (stat == null) continue;
             if (stat.isMapped()) {
+            	Utils.debug("stat.isMapped == true");
                 if (mappedObjects == null) {
-                    Object o = DB.decodeFromJSON(rs.getClob(Statistic.MappedObjectsColumn));
+                	Utils.debug("mappedObject == null");
+                	Clob c = rs.getClob(Statistic.MappedObjectsColumn);
+                	Utils.debug("c = %s", c.toString());
+                    Object o = DB.decodeFromJSON(c);
+                    Utils.debug("o is object type %s", o.getClass().getName());
                     if (o instanceof TypeMap)
                         mappedObjects = (TypeMap)o;
                     else
                         throw new UnsupportedOperationException("mapped objects cannot be read from the database");
                 }
+                Utils.debug("set stat value to %s", mappedObjects.get(statName));
                 values.set(statName, mappedObjects.get(statName));
             } else
                 switch (stat.getType()) {

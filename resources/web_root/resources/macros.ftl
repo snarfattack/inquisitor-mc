@@ -56,15 +56,15 @@
     <div class="iconMeter">
         <#if (full > 0)>
             <#list 1..full as i>
-                <img src="/img/${baseSrc}-full.png"/>
+                <img src="../img/${baseSrc}-full.png"/>
             </#list>
         </#if>
         <#if ((full + empty) < 10)>
-            <img src="/img/${baseSrc}-half.png"/>
+            <img src="../img/${baseSrc}-half.png"/>
         </#if>
         <#if (empty > 0)>
             <#list 1..empty as i>
-                <img src="/img/${baseSrc}-empty.png"/>
+                <img src="../img/${baseSrc}-empty.png"/>
             </#list>
         </#if>
     </div>

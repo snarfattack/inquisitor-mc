@@ -104,7 +104,7 @@ public final class EntityListenerImpl implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityTame(EntityTameEvent event) {
         if (! (event.getOwner() instanceof Player)) return;
-        Player player = (Player)event.getEntity();
+        Player player = (Player)event.getOwner();
 		if (!PlayerStats.isStatsPlayer(player))
 			return;
         PlayerStats.group.getStatistics(player.getName()).incr("animalsTamed", Utils.normalizeEntityTypeName(event.getEntityType()));

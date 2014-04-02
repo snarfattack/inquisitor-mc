@@ -1,7 +1,7 @@
 
         <div id="footer" class="grid_16">
             <p>
-                Powered by <a href="http://dev.bukkit.org/server-mods/inquisitor/" target="_blank">${pluginName} v${pluginVersion}</a> &copy; ${now?string("yyyy")} frdfsnlght
+                Powered by <a href="http://code.google.com/p/inquisitor-mc/" target="_blank">${pluginName} v${pluginVersion}</a> &copy; ${now?string("yyyy")} frdfsnlght, snarfattack
             </p>
             <p>
                 Fugue Icons &copy; 2012 Yusuke Kamiyamane. All rights reserved. Icons are available under a <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>.
@@ -10,7 +10,7 @@
                 Other icons and images &copy; 2012 Mojang. All rights reserved.
             </p>
             <p>
-                <a href="http://dev.bukkit.org/server-mods/inquisitor/" target="_blank"><img src="http://dev.bukkit.org/media/images/42/161/inquisitor.png"/></a>
+                <a href="http://code.google.com/p/inquisitor-mc/" target="_blank"><img src="http://code.google.com/p/inquisitor-mc/logo?cct=1392441729"/></a>
             </p>
         </div>
         <div class="clear"></div>
@@ -30,7 +30,7 @@
                         event.target.form.submit();
                     },
                     source: function(request, response) {
-                        $.getJSON('/api/findPlayers', { playerName: request.term }, function(data) {
+                        $.getJSON('../api/findPlayers', { playerName: request.term }, function(data) {
                             if (! data.success) return;
                             var names = data.result;
                             if (names.length > 20) names = names.slice(0, 20);

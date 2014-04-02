@@ -13,9 +13,9 @@
     'name': {
         'header': 'Name',
         'cellClass': 'name',
-        'link': r'"/player/${player.name?url}"',
+        'link': r'"../player/${player.name?url}"',
         'linkTitle': 'View Player',
-        'format': r'<div class="face" style="background-image:url(/skin/${player.name})"></div><div class="name">${player.name}</div>'
+        'format': r'<div class="face" style="background-image:url(../skin/${player.name})"></div><div class="name">${player.name}</div>'
         },
     'displayName' : {'header': 'Display Name', 'cellClass': 'number'},
     'address' : {'header': 'Address', 'cellClass': 'number'},
