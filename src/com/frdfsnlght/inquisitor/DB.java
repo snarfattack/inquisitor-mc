@@ -478,8 +478,8 @@ public final class DB {
 				Config.setPropertyDirect("db.v2-14-fix", true);
 			}
 
-			if (!columnExists("players", "uuid")) {
-				addColumn("players", "uuid", "varchar(36)");
+			if (tableExists("players") && !columnExists(tableName("players"), "uuid")) {
+				addColumn(tableName("players"), "uuid", "varchar(36)");
 			}
 
 			didUpdates = true;
