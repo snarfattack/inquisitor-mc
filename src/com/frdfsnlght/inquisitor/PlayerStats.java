@@ -109,6 +109,7 @@ public final class PlayerStats {
 				});
 
 		group.addStatistic(new Statistic("displayName", Type.STRING, 255));
+		group.addStatistic(new Statistic("uuid", Type.STRING, 36));
 
 		group.addStatistic(new Statistic("address", Type.STRING, 40));
 		group.addStatistic(new Statistic("inventory", Type.OBJECT));
@@ -319,7 +320,22 @@ public final class PlayerStats {
 		Utils.debug("onPlayerJoin '%s'", player.getName());
 
 		try {
+			//Very simply update statement that will allow players to add their UUIDs to the db during the
+			// conversion process, then once a name change happens it will update it based on the uuid matching.
+			PreparedStatement stmt = null;
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE `").append(group.getName()).append("` SET `");
+			sql.append(group.getKeyName()).append("`=?, `uuid`=? WHERE `");
+			sql.append(group.getKeyName()).append("`=? OR `uuid`=?");
+			stmt = DB.prepare(sql.toString());
+			stmt.setString(1, player.getName());
+			stmt.setString(2, player.getUniqueId().toString());
+			stmt.setString(3, player.getName());
+			stmt.setString(4, player.getUniqueId().toString());
+			stmt.execute();
+			
 			Statistics stats = group.getStatistics(player.getName());
+			stats.set("uuid", player.getUniqueId().toString());
 			stats.incr("joins");
 			stats.set("lastJoin", new Date());
 			stats.set("sessionTime", 0);
@@ -422,7 +438,7 @@ public final class PlayerStats {
 	public static void onPlayerMove(Player player, Location to) {
 		if (!isStatsPlayer(player))
 			return;
-		//Utils.debug("onPlayerMove '%s'", player.getName());
+		// Utils.debug("onPlayerMove '%s'", player.getName());
 
 		Statistics stats = group.getStatistics(player.getName());
 		PlayerState state = playerStates.get(player.getName());
@@ -737,11 +753,11 @@ public final class PlayerStats {
 				stackMap.put("durability", stack.getDurability());
 				MaterialData data = stack.getData();
 				if (data != null) {
-//					stackMap.put(
-//							"data",
-//							Integer.parseInt(data.toString().replaceAll(
-//									"[^\\d]", "")));
-					stackMap.put("data", (int)data.getData());
+					// stackMap.put(
+					// "data",
+					// Integer.parseInt(data.toString().replaceAll(
+					// "[^\\d]", "")));
+					stackMap.put("data", (int) data.getData());
 				}
 				TypeMap ench = new TypeMap();
 				for (Enchantment e : stack.getEnchantments().keySet())
