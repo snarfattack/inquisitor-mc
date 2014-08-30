@@ -324,7 +324,7 @@ public final class PlayerStats {
 			// conversion process, then once a name change happens it will update it based on the uuid matching.
 			PreparedStatement stmt = null;
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE `").append(group.getName()).append("` SET `");
+			sql.append("UPDATE ").append(DB.tableName(group.getName())).append(" SET `");
 			sql.append(group.getKeyName()).append("`=?, `uuid`=? WHERE `");
 			sql.append(group.getKeyName()).append("`=? OR `uuid`=?");
 			stmt = DB.prepare(sql.toString());

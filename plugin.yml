@@ -1,7 +1,6 @@
 name: Inquisitor
 main: com.frdfsnlght.inquisitor.Inquisitor
-version: 2.26
-author: snarfattack
+version: 2.28
 authors: [snarfattack, frdfsnlght]
 website: http://code.google.com/p/inquisitor-mc/
 description: Collects player statistics, stores them in a database, and optionally serves them through a built-in web server.

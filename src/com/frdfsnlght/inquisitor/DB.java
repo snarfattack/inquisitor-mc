@@ -436,50 +436,8 @@ public final class DB {
 				}
 			}
 
-			if ((!Config.getBooleanDirect("db.v2-14-fix", false))
-					&& tableExists("players")
-					&& columnExists("players", Statistic.MappedObjectsColumn)) {
-
-				Utils.info("Applying v2.14 DB fix to existing players...");
-
-				stmt1 = prepare("SELECT `id`,`" + Statistic.MappedObjectsColumn
-						+ "` FROM " + tableName("players"));
-				rs = stmt1.executeQuery();
-
-				stmt2 = prepare("UPDATE " + tableName("players") + " SET `"
-						+ Statistic.MappedObjectsColumn + "`=? WHERE `id`=?");
-
-				while (rs.next()) {
-					int id = rs.getInt("id");
-					TypeMap mapped = (TypeMap) DB.decodeFromJSON(rs
-							.getClob(Statistic.MappedObjectsColumn));
-					boolean needUpdate = false;
-					for (String key : mapped.keySet()) {
-						Object value = mapped.get(key);
-						if (value instanceof Long) {
-							needUpdate = true;
-							mapped.put(key, null);
-						}
-					}
-					if (needUpdate) {
-						Utils.info("Reparing player %s", id);
-						stmt2.setClob(1, encodeToJSON(mapped));
-						stmt2.setInt(2, id);
-						stmt2.executeUpdate();
-					}
-				}
-				rs.close();
-				rs = null;
-				stmt1.close();
-				stmt1 = null;
-				stmt2.close();
-				stmt2 = null;
-
-				Config.setPropertyDirect("db.v2-14-fix", true);
-			}
-
-			if (tableExists("players") && !columnExists(tableName("players"), "uuid")) {
-				addColumn(tableName("players"), "uuid", "varchar(36)");
+			if (tableExists("players") && !columnExists("players", "uuid")) {
+				addColumn("players", "uuid", "varchar(36)");
 			}
 
 			didUpdates = true;
